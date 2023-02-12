@@ -1,12 +1,24 @@
-const express = require ("express");
+const express = require("express");
 const app = express();
+var morgan = require('morgan')
+const routes = require("./routes/mainroutes");
 
-PORT = 3007
+// puerto
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT,  () => {
-    console.log("corriendo en en link https/localhost:" + PORT);
-})
+// SETTINGS
+// nombre proyecto
+app.set("appName", "PRIMER SERVER");
+// lo necesario para mi template EJS
+app.set("views", __dirname + "/views")
+app.set("views engine", "ejs");
 
-app.get("/", (req, res) => {
-    res.send("Hello")
-})
+// morgan- MIDDLEWARES
+app.use(morgan('short'));
+
+// rutas
+app.use(routes)
+
+// puerto
+app.listen(PORT, () => { console.log(`Server running on http://localhost:${PORT}`), console.log(`nombre del server`, app.set("appName"));
+; })
